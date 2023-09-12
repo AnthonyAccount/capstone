@@ -68,8 +68,8 @@ include './var/navsidebar.php'
 <main>
     <!-- your content goes here -->
 </main>
-<br><br><br><br><br>
-<div class="mt-8 pl-80 bg-white p-4 shadow rounded-lg">
+<br><br>
+<div class="mt-8 p-4 sm:ml-64 bg-white shadow rounded-lg">
                 <h2 class="text-gray-500 text-lg font-semibold pb-4">Roles and Permissions</h2>
                 <div class="my-1"></div> <!-- Espacio de separación -->
                 <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div> <!-- Línea con gradiente -->

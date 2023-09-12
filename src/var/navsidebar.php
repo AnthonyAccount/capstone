@@ -16,7 +16,7 @@ $canViewPrescription = checkPermission('prescription');
 <head>
     <title>User List</title>
     <link href="../src/input.css" rel="stylesheet">
-    <link href="/dist/output.css" rel="stylesheet">
+    <link href="../../dist/output.css" rel="stylesheet">
 </head>
 <body>
  <!-- Navbar start -->
@@ -39,12 +39,11 @@ $canViewPrescription = checkPermission('prescription');
     </button>
 </nav>
 <!-- Navbar end -->
-
-<!-- Smaller Sidebar start-->
+<!-- Smaller Sidebar start -->
 <div id="containerSidebar" class="z-40">
     <div class="navbar-menu relative z-40">
         <nav id="sidebar"
-            class="fixed left-0 bottom-0 flex w-1/4 flex-col overflow-y-auto bg-neutral-100 pt-6 pb-8 sm:max-w-xs lg:w-16">
+            class="fixed left-0 bottom-0 flex flex-col overflow-y-auto bg-neutral-100 pt-6 pb-8 w-64"> <!-- Adjust the width here -->
             <!-- one category / navigation group -->
             <div class="px-4 pb-6">
                 <h3 class="mb-2 text-xs font-medium uppercase text-black">
@@ -92,6 +91,7 @@ $canViewPrescription = checkPermission('prescription');
         </nav>
     </div>
 </div>
+
 <br>
 </body>
 </html>

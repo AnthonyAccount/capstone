@@ -73,7 +73,7 @@ include './var/navsidebar.php'
     <!-- your content goes here -->
 </main>
 <br><br>
-<div class="mt-8 pl-80 bg-white p-4 shadow rounded-lg">
+<div class="mt-8 p-4 sm:ml-64 bg-white shadow rounded-lg">
 
                 <h2 class="text-gray-500 text-lg font-semibold pb-4"><a href="distributorlist.php"> Doctors ></a></h2>
                 <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div> <!-- Línea con gradiente -->
