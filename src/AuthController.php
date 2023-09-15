@@ -10,7 +10,8 @@ class AuthController {
             // User authentication successful, retrieve user data
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
-            $_SESSION['RoleName'] = $user['RoleName']; // Make sure this matches the role IDs in your permissions array
+            $_SESSION['RoleName'] = $user['RoleName'];
+            // Make sure this matches the role IDs in your permissions array
 
             // Redirect the user to the dashboard page
             header('Location: dashboard.php');

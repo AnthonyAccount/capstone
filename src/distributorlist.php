@@ -84,30 +84,30 @@ include './var/navsidebar.php'
                 </div>
                     <?php endif; ?>
                 <table class="w-full table-auto text-sm">
-                    <thead>
+                <thead class=" bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr class="text-sm text-center">
-                          <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Distributor Name</th>
-                            <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Address</th>
-                            <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Contact number</th>
-                            <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Medicine</th>
-                            <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Edit</th>                        
+                          <th class="py-2 px-4 bg-grey-lightest font-bold text-sm text-grey-light border-b border-grey-light">Distributor Name</th>
+                            <th class="py-2 px-4 bg-grey-lightest font-bold text-sm text-grey-light border-b border-grey-light">Address</th>
+                            <th class="py-2 px-4 bg-grey-lightest font-bold text-sm text-grey-light border-b border-grey-light">Contact number</th>
+                            <th class="py-2 px-4 bg-grey-lightest font-bold text-sm text-grey-light border-b border-grey-light">Medicine</th>
+                            <th class="py-2 px-4 bg-grey-lightest font-bold text-sm text-grey-light border-b border-grey-light">Edit</th>                        
                         </tr>
                     </thead>
                     <tbody>
             <?php foreach ($users as $user): ?>
                 <tr class="hover:bg-grey-lighter text-center">
-                    <td class="border px-4 py-2"><?php echo $user["first_name"]; ?><?php echo $user["last_name"]; ?></td>
+                <td class="py-2 px-4 bg-grey-lightest text-sm text-grey-light border-b border-grey-light"><a class="font-bold"><?php echo $user["first_name"]; ?> <?php echo $user["last_name"]; ?></a><br><a><?php echo $user["email"]; ?></a></td>
           
-                    <td class="border px-4 py-2"><?php echo $user["contact_info"]; ?></td>
-                    <td class="border px-4 py-2"><?php echo $user["email"]; ?></td>
-                    <td class="border px-4 py-2">
+                    <td class="py-2 px-4 bg-grey-lightest text-sm text-grey-light border-b border-grey-light"><?php echo $user["contact_info"]; ?></td>
+                    <td class="py-2 px-4 bg-grey-lightest text-sm text-grey-light border-b border-grey-light"><?php echo $user["email"]; ?></td>
+                    <td class="py-2 px-4 bg-grey-lightest text-sm text-grey-light border-b border-grey-light">
                     <button class=" bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded showmodal">
                        Medicine
                     </button>
                     </td>
                     
               <?php if ($canEditdistributor): ?>
-                    <td class="border px-4 py-2">
+                    <td class="py-2 px-4 bg-grey-lightest text-sm text-grey-light border-b border-grey-light">
                         <a href="edit_user.php?id=<?php echo $user["doctor_id"]; ?>" class="text-blue-500 hover:underline">Edit</a>
 
                     </td>

@@ -22,7 +22,7 @@ if (isset($_GET["logout"])) {
 
 // Redirect to login page if user is not logged in
 if (!isset($_SESSION["username"])) {
-    header("Location: index.php");
+    header("Location: login1.php");
     exit();
 }
 $registration_status = "";
@@ -122,24 +122,25 @@ include './var/navsidebar.php'
         <?php endif; ?>
     </div>
     <table class="w-full table-auto text-sm">
-        <thead>
+        <thead class=" bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr class="text-sm leading-normal">
-                <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Photo</th>
-                <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Name</th>
-                <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Position</th>
-                <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Role</th>
-                <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Edit</th>
+                <th class="py-2 px-4 bg-grey-lightest font-bold text-sm text-grey-light border-b border-grey-light">Photo</th>
+                <th class="py-2 px-4 bg-grey-lightest font-bold text-sm text-grey-light border-b border-grey-light">Name</th>
+                <th class="py-2 px-4 bg-grey-lightest font-bold text-sm text-grey-light border-b border-grey-light">Position</th>
+                <th class="py-2 px-4 bg-grey-lightest font-bold text-sm text-grey-light border-b border-grey-light">Role</th>
+                <th class="py-2 px-4 bg-grey-lightest font-bold text-sm text-grey-light border-b border-grey-light">Edit</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($users as $user): ?>
                 <tr class="hover:bg-grey-lighter text-center">
-                    <td class="py-2 px-4 border-b border-grey-light">
-                        <img src="https://via.placeholder.com/40" alt="Foto Perfil" class="rounded-full h-10 w-10">
-                    </td>
-                    <td class="border px-4 py-2"><?php echo $user["name"]; ?></td>
-                    <td class="border px-4 py-2"><?php echo $user["position"]; ?></td>
-                    <td class="border px-4 py-2"><?php echo $user["RoleName"]; ?></td>
+                <td class="py-2 px-4 border-b border-grey-light flex justify-center items-center">
+              <img src="https://via.placeholder.com/40" alt="Foto Perfil" class="rounded-full h-10 w-10">
+                </td>
+
+                    <td class="py-2 px-4 bg-grey-lightest text-sm font-bold text-grey-light border-b border-grey-light"><?php echo $user["name"]; ?></td>
+                    <td class="py-2 px-4 bg-grey-lightest text-sm text-grey-light border-b border-grey-light"><?php echo $user["position"]; ?></td>
+                    <td class="py-2 px-4 bg-grey-lightest text-sm text-grey-light border-b border-grey-light"><?php echo $user["RoleName"]; ?></td>
                     <?php if ($canEditadmin): ?>
                         <td class="border px-4 py-2">
                             <a href="edit_user.php?id=<?php echo $user["dohstaffid"]; ?>" class="text-blue-500 hover:underline">Edit</a>
@@ -248,19 +249,6 @@ include './var/navsidebar.php'
 </html>
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", () => {
-        const navbar = document.getElementById("navbar");
-        const sidebar = document.getElementById("sidebar");
-        const btnSidebarToggler = document.getElementById("btnSidebarToggler");
-        const navClosed = document.getElementById("navClosed");
-        const navOpen = document.getElementById("navOpen");
-
-        btnSidebarToggler.addEventListener("click", (e) => {
-            e.preventDefault();
-            sidebar.classList.toggle("show");
-            navClosed.classList.toggle("hidden");
-            navOpen.classList.toggle("hidden");
-        });
-
         sidebar.style.top = parseInt(navbar.clientHeight) - 1 + "px";
     });
 </script>
