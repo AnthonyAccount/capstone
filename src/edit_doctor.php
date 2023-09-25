@@ -1,3 +1,4 @@
+
 <?php
 require_once("config.php");
 session_start();
@@ -11,6 +12,7 @@ if (isset($_GET["logout"])) {
         session_destroy();
     }
 }
+
 // Check if the user is logged in
 if (!isset($_SESSION["username"])) {
     header("Location: index.php");
@@ -46,26 +48,25 @@ include './var/navsidebar.php'
 <!DOCTYPE html>
 <html>
 <head>
-    
-    <title>user list</title>
+    <title>Doctor Profile</title>
     <link href="../src/input.css" rel="stylesheet">
     <link href="../dist/output.css" rel="stylesheet">
 </head>
 <body>
-
+    <br> <br> <br>  <br><br><br>
 <div class="flex justify-center items-center h-screen">
     <div class="mt-8 p-4 sm:ml-64 bg-white shadow rounded-lg">
-    <div class="text-right mt-4">
-    <a href="userlist.php" class=" bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded showmodal">
-                        Doctor List
-</a>
+        <div class="text-right mt-4">
+            <a href="userlist.php" class="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded showmodal">
+                Doctor List
+            </a>
         </div>
-        <h1>Doctor information</h1>
+        <h1>Doctor Information</h1>
         <br>
         <div class="flex font-sans">
-            <div class="flex-none w-48 relative">
-                <!-- Replace the image source with the correct path -->
-                <img src="../dist/images/doc.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+            <div class="flex-none w-48 relative justify-center">
+                <!-- Display the Base64 image data -->
+                <img src="data:image/jpeg;base64,<?php echo base64_encode($doctorData['prof_image']); ?>" alt="Doctor's Profile Image" class="rounded-full h-50 w-50" loading="lazy" />
             </div>
             <form class="flex-auto p-6">
                 <div class="flex flex-wrap">
@@ -87,45 +88,62 @@ include './var/navsidebar.php'
                         <!-- Add any additional content here -->
                     </div>
                 </div>
-                <div class="flex space-x-4 mb-6 text-sm font-medium">
-                    <div class="flex-auto flex space-x-4">
-                        <button class="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded" type="submit">
-                            Prescriptions
-                        </button>
+</div>
+               
+    <div class="grid grid-cols-2 gap-4 w-auto">
+                                        <div>
+                                            <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
+                                            <input type="text" value="<?php echo $doctorData['first_name']; ?>" name="first_name" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+                                        </div>                                 
+                                        <div>
+                                            <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last Name</label>
+                                            <input type="text" value="<?php echo $doctorData['last_name']; ?>" name="last_name" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required="">
+                                        </div>
+                                        <div>
+                                            <label for="specialty" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Specialist</label>
+                                            <input type="text" value="<?php echo $doctorData['specialty']; ?>" name="specialty" id="specialty" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required="">
+                                        </div>
+                                        <div>
+                                            <label for="contact_info" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact</label>
+                                            <input type="text" value="<?php echo $doctorData['contact_info']; ?>" name="contact_info" id="contact_info" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required="">
+                                        </div>
+                                        <div>
+                                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                                            <input type="email" value="<?php echo $doctorData['email']; ?>" name="email" id="email"  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+                                        </div>
+                                        <div>
+                                            <label for="region" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Region</label>
+                                            <input type="text" value="<?php echo $doctorData['region']; ?>" name="region" id="region"  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+                                        </div>
+                                        <div>
+                                            <select name="status" value="<?php echo $doctorData['status']; ?>" class="mt-1 p-2 w-full border rounded">
+                                                <option  value="<?php echo $doctorData['status']; ?>"><?php echo $doctorData['status']; ?></option>
+                                                <option value="inactive">Inactive</option>
+                                                <option value="active">Active</option> <!-- Changed to lowercase "active" -->
+                                            </select>  </div>
+                                        <div>
+                                            <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+                                            <input type="text"  value="<?php echo $doctorData['username']; ?>" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+                                        </div>
+                                        <div>
+                                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                                            <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+                                        </div>
+                                        <div>
+                                            <label for="picture" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Picture</label>
+                                            <input type="file"  name="prof_image" id="prof_image" required="">
+                                        </div>
+                                    </div>   
+                                    <div class="mt-6">
+                      <button type="submit" class="w-full text-center inline-flex items-center justify-center px-4 py-2 bg-white border border-transparent rounded-md font-semibold capitalize text-green-900 hover:bg-green-800 active:bg-green-800 focus:outline-none focus:border-green-800 focus:ring focus:ring-green-700 disabled:opacity-25 transition">Update Account</button>
                     </div>
-                    <button class="flex-none flex items-center justify-center w-9 h-9 rounded-md text-slate-300 border border-slate-200" type="button" aria-label="Like">
-                        <svg width="20" height="20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
-                        </svg>
-                    </button>
-                </div>
+                               
+             
             </form>
         </div>
     </div>
 </div>
- <!-- Book/Product Cards -->
- <div class=" ml-64 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <!-- Book/Product Card -->
-            <div class="bg-white p-4 shadow rounded-lg">
-                <div class="flex justify-center">
-                    <img src="../dist/images/qr.png" alt="Book 1"
-                        class="h-48 w-32 object-cover">
-                </div>
-                <div class="mt-4 text-center">
-                    <h2 class="text-lg font-semibold text-slate-900">Anthony Algabre</h2>
-                    <p class="w-full flex-none text-sm font-medium text-slate-700 mt-2"><?php echo $doctorData['date_created']; ?></p>
-                </div>
-                <div class="flex justify-center items-center">
-    <button class="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded mt-2" type="submit">
-        View Prescriptions
-    </button>
-</div>
-
-            </div>
-            </div>
-        </div>
-    </div>
-
+                    
 </body>
 </html>
 <script type="text/javascript">

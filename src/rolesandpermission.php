@@ -19,7 +19,7 @@ if (!isset($_SESSION["username"])) {
     exit();
 }
 // Pagination settings
-$rows = 5;
+$rows = 10;
 $page = 1; // Default page number if not set
 
 if(isset($_GET['page-nr'])){

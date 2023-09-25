@@ -6,37 +6,30 @@ include './php/searchdoctor.php';
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Doctor List</title>
+    <title>Pharmacy List</title>
     <link href="../src/input.css" rel="stylesheet">
     <link href="../dist/output.css" rel="stylesheet">
 </head>
 <body>
     <br><br>
     <div class="mt-8 p-4 sm:ml-64 bg-white shadow rounded-lg">
-        <h2 class="text-gray-500 text-lg font-semibold pb-4">Doctors</h2>
+        <h2 class="text-gray-500 text-lg font-semibold pb-4">Pharmacy</h2>
         <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div> <!-- Línea con gradiente -->
         <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
             <input type="text" name="searchQuery" placeholder="Search by name">
             <button type="submit" name="search"></button>
         </form>
         
-        <?php if ($canCreatedoctor): ?>
-        <div class="text-right mt-4">
-            <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" class="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded showmodal">
-                Add Doctor
-            </button>
-        </div>
-        <?php endif; ?>
-        
         <table class="w-full table-auto text-sm">
             <thead class="bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr class="text-sm text-center">
-                    <th class="py-2 px-4 bg-grey-lightest font-bold text-sm text-grey-light border-b border-grey-light">Photo</th>
-                    <th class="py-2 px-4 bg-grey-lightest font-bold text-sm text-grey-light border-b border-grey-light">Name</th>
-                    <th class="py-2 px-4 bg-grey-lightest font-bold text-sm text-grey-light border-b border-grey-light">Status</th>
+                    <th class="py-2 px-4 bg-grey-lightest font-bold text-sm text-grey-light border-b border-grey-light">Pharmacy Name</th>
+                    <th class="py-2 px-4 bg-grey-lightest font-bold text-sm text-grey-light border-b border-grey-light">License</th>
+                    <th class="py-2 px-4 bg-grey-lightest font-bold text-sm text-grey-light border-b border-grey-light">Address</th>
+                    <th class="py-2 px-4 bg-grey-lightest font-bold text-sm text-grey-light border-b border-grey-light">Contact</th>
                     <th class="py-2 px-4 bg-grey-lightest font-bold text-sm text-grey-light border-b border-grey-light">Date created</th>
-                    <th class="py-2 px-4 bg-grey-lightest font-bold text-sm text-grey-light border-b border-grey-light">Prescription</th>
-                    <th class="py-2 px-4 bg-grey-lightest font-bold text-sm text-grey-light border-b border-grey-light">Action</th>
+                    <th class="py-2 px-4 bg-grey-lightest font-bold text-sm text-grey-light border-b border-grey-light">Status</th>
+                    <th class="py-2 px-4 bg-grey-lightest font-bold text-sm text-grey-light border-b border-grey-light">Dispense Activity</th>
                 </tr>
             </thead>
             <tbody>
@@ -50,18 +43,12 @@ include './php/searchdoctor.php';
                         <a><?php echo $user["email"]; ?></a>
                     </td>
                     <td class="py-2 px-4 bg-grey-lightest text-sm text-grey-light border-b border-grey-light"><?php echo $user["status"]; ?></td>
+                    <td class="py-2 px-4 bg-grey-lightest text-sm text-grey-light border-b border-grey-light"><?php echo $user["contact_info"]; ?></td>
                     <td class="py-2 px-4 bg-grey-lightest text-sm text-grey-light border-b border-grey-light"><?php echo $user["date_created"]; ?></td>
+                    <td class="py-2 px-4 bg-grey-lightest text-sm text-grey-light border-b border-grey-light"><?php echo $user["status"]; ?></td>
                     <td class="py-2 px-4 bg-grey-lightest text-sm text-grey-light border-b border-grey-light">
-                        <a href="doctorprescription.php" class="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded showmodal">
-                            Prescriptions
-                </a>
+                         <a href="view_doctor.php?id=<?php echo $user["doctor_id"]; ?>" class="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded">View</a>
                     </td>
-                    <?php if ($canEditdoctor): ?>
-                    <td class="py-2 px-4 bg-grey-lightest text-sm text-grey-light border-b border-grey-light">
-                        <a href="edit_doctor.php?id=<?php echo $user["doctor_id"]; ?>" class="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded">Edit</a>
-                        <a href="view_doctor.php?id=<?php echo $user["doctor_id"]; ?>" class="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded">View</a>
-                    </td>
-                    <?php endif; ?>
                 </tr>
                 <?php endforeach; ?>
             </tbody>

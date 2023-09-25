@@ -29,13 +29,15 @@ function checkPermission($permission) {
 
     // Define role-based permissions with role IDs
     $permissions = [
-        'Admin' => ['createdoctor', 'createdistributor', 'createadmin', 'adminedit', 'doctoredit', 'distributoredit', 'admin', 'users', 'prescription'],
+        'SuperAdmin' => ['createdoctor', 'createdistributor', 'createadmin', 'adminedit', 'doctoredit' ,
+         'distributoredit', 'admin', 'users', 'prescription', 'verify'],
         'Maineditor' => ['doctoredit', 'distributoredit', 'adminedit', 'users', 'admin', 'prescription'],
         'editor1' => ['doctoredit', 'users', 'admin', 'prescription'],
         'editor2' => ['distributoredit', 'users', 'admin', 'prescription'],
         'viewer' => ['users', 'admin', 'prescription'],
-        'Adminviewer' => ['admin'],
+        'Adminviewer' => ['admin', 'users'],
         'Userviewer' => ['users'],
+        'Validator' => ['verify']
         
         
     ];

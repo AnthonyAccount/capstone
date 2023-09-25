@@ -1,3 +1,29 @@
+<?php
+require_once("config.php");
+
+session_start();
+
+if (isset($_GET["logout"])) {
+    if ($_GET["logout"] === "true") {
+        // Clear all session variables
+        $_SESSION = array();
+
+        // Destroy the session
+        session_destroy();
+    }
+}
+
+// Redirect to login page if the user is not logged in
+if (!isset($_SESSION["username"])) {
+    header("Location: index.php");
+    exit();
+}
+
+// Get the logged-in username
+$username = $_SESSION["username"];
+
+include './var/navsidebar.php'
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -174,3 +200,8 @@
 
 </html>
 
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", () => {
+        sidebar.style.top = parseInt(navbar.clientHeight) - 1 + "px";
+    });
+</script>

@@ -36,14 +36,14 @@ if(isset($_GET['page-nr'])){
 $start = ($page - 1) * $rows;
 
 // Query to fetch limited users for the current page
-$query = "SELECT * FROM doctor LIMIT $start, $rows";
+$query = "SELECT * FROM tbldistributor LIMIT $start, $rows";
 $result = $conn->query($query);
 
 // ... (rest of the code)
 
 $users = [];
 
-$query1 = "SELECT * FROM doctor";
+$query1 = "SELECT * FROM tbldistributor";
 $records  = $conn->query($query1);
 $nr_rows = $records->num_rows;
 $pages = ceil($nr_rows / $rows);
@@ -96,10 +96,10 @@ include './var/navsidebar.php'
                     <tbody>
             <?php foreach ($users as $user): ?>
                 <tr class="hover:bg-grey-lighter text-center">
-                <td class="py-2 px-4 bg-grey-lightest text-sm text-grey-light border-b border-grey-light"><a class="font-bold"><?php echo $user["first_name"]; ?> <?php echo $user["last_name"]; ?></a><br><a><?php echo $user["email"]; ?></a></td>
+                <td class="py-2 px-4 bg-grey-lightest text-sm text-grey-light border-b border-grey-light"><a class="font-bold"><?php echo $user["distributor_name"]; ?></a><br><a><?php echo $user["contact_number"]; ?></a></td>
           
-                    <td class="py-2 px-4 bg-grey-lightest text-sm text-grey-light border-b border-grey-light"><?php echo $user["contact_info"]; ?></td>
-                    <td class="py-2 px-4 bg-grey-lightest text-sm text-grey-light border-b border-grey-light"><?php echo $user["email"]; ?></td>
+                    <td class="py-2 px-4 bg-grey-lightest text-sm text-grey-light border-b border-grey-light"><?php echo $user["address"]; ?></td>
+                    <td class="py-2 px-4 bg-grey-lightest text-sm text-grey-light border-b border-grey-light"><?php echo $user["status"]; ?></td>
                     <td class="py-2 px-4 bg-grey-lightest text-sm text-grey-light border-b border-grey-light">
                     <button class=" bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded showmodal">
                        Medicine
@@ -154,7 +154,7 @@ include './var/navsidebar.php'
 </div>
 <div class="modal h-screen w-full fixed  py-12 left-0 top-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-50">
 
-<form method="POST" action="" class="mt-10 space-y-4 md:space-y-6 bg-white rounded p-6">
+<form method="POST" action="./php/distributor.php" class="mt-10 space-y-4 md:space-y-6 bg-white rounded p-6">
 <div class="text-right">
           
 </div>

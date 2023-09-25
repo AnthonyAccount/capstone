@@ -1,6 +1,8 @@
 <?php
 require_once("config.php");
+
 $registration_status = "";
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Extract user and doctor info from POST data
     $username = $_POST["username"];
@@ -14,28 +16,44 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = $_POST["email"];
     $status = $_POST["status"];
     $region = $_POST["region"];
+    
+    // Handle image upload
+    $image = $_FILES["prof_image"];
+    $imageData = file_get_contents($image["tmp_name"]); // Read image data
+    $imageData = base64_encode($imageData); // Encode image data as base64
 
-    // Perform SQL query to insert user into User table
-    $userInsertQuery = "INSERT INTO user1 (username, password, RoleID) VALUES ('$username', '$hashedPassword', 1)";
-    if ($conn->query($userInsertQuery) === TRUE) {
+    // Perform SQL query to insert user into User table using prepared statement
+    $userInsertQuery = "INSERT INTO user1 (username, password, RoleID) VALUES (?, ?, 1)";
+    $userInsertStmt = $conn->prepare($userInsertQuery);
+    $userInsertStmt->bind_param("ss", $username, $hashedPassword);
+
+    if ($userInsertStmt->execute()) {
         // Get the inserted user_id
         $user_id = $conn->insert_id;
 
-        // Perform SQL query to insert doctor into Doctor table
-        $doctorInsertQuery = "INSERT INTO doctor (user_id, first_name, last_name, specialty, contact_info, email,  status,  region) 
-                              VALUES ('$user_id', '$firstName', '$lastName', '$specialty', '$contactInfo', '$email', '$status', '$region')";
-        if ($conn->query($doctorInsertQuery) === TRUE) {
+        // Perform SQL query to insert doctor into Doctor table using prepared statement
+        $doctorInsertQuery = "INSERT INTO doctor (user_id, first_name, last_name, specialty, contact_info, email, status, region, prof_image) 
+                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $doctorInsertStmt = $conn->prepare($doctorInsertQuery);
+        $doctorInsertStmt->bind_param("issssssss", $user_id, $firstName, $lastName, $specialty, $contactInfo, $email, $status, $region, $imageData);
+
+        if ($doctorInsertStmt->execute()) {
             echo "Doctor registered successfully.";
         } else {
-            echo "Error: " . $doctorInsertQuery . "<br>" . $conn->error;
+            echo "Error: " . $doctorInsertStmt->error;
         }
     } else {
-        echo "Error: " . $userInsertQuery . "<br>" . $conn->error;
+        echo "Error: " . $userInsertStmt->error;
     }
+
+    // Close the prepared statements
+    $userInsertStmt->close();
+    $doctorInsertStmt->close();
 }
 
 $conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -87,7 +105,7 @@ $conn->close();
         <?php endif; ?>
         
 
-        <form method="POST" action="" class="space-y-4 md:space-y-6 bg-white rounded">
+        <form method="POST" enctype="multipart/form-data" action="" class="space-y-4 md:space-y-6 bg-white rounded">
                
         <div class="grid grid-cols-2 gap-4 w-auto">
                                         <div>
@@ -129,7 +147,7 @@ $conn->close();
                                         </div>
                                         <div>
                                             <label for="picture" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Picture</label>
-                                            <input type="file" name="image" id="image" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+                                            <input type="file" name="prof_image" id="prof_image" required="">
                                         </div>
                                     </div>   
                                

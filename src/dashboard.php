@@ -131,6 +131,7 @@ include './var/navsidebar.php';
             </div>
         </div>
     </div>
+    
 </body>
 </html>
 <script type="text/javascript">
