@@ -1,8 +1,10 @@
 <?php
 require_once("usermodel.php");
 
-class AuthController {
-    public function login($conn, $username, $password) {
+class AuthController
+{
+    public function login($conn, $username, $password)
+    {
         $userModel = new UserModel();
         $user = $userModel->getUserByUsername($conn, $username);
 
@@ -10,27 +12,34 @@ class AuthController {
             // User authentication successful, retrieve user data
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
-            $_SESSION['RoleName'] = $user['RoleName'];
-            // Make sure this matches the role IDs in your permissions array
 
-            // Redirect the user to the dashboard page
-            header('Location: dashboard.php');
-            exit(); // Terminate script execution after redirection
+            $_SESSION['RoleName'] = $user['RoleName'];
+
+            if ($user['RoleName'] == "Doctor") {
+                header('Location: ../src/Doctor/doctor_dashboard.php');
+            } elseif ($user['RoleName'] == "patient") {
+                header('Location: ../src/Patient/patient_dashboard.php');
+            } else {
+                header('Location: ../src/Admin/dashboard.php');
+            }
+            exit();
         } else {
-            // User authentication failed
             return false;
         }
     }
 }
 
-function checkPermission($permission) {
+function checkPermission($permission)
+{
     // Get the user's role ID from the session
     $userRoleID = $_SESSION['RoleName'];
 
     // Define role-based permissions with role IDs
     $permissions = [
-        'SuperAdmin' => ['createdoctor', 'createdistributor', 'createadmin', 'adminedit', 'doctoredit' ,
-         'distributoredit', 'admin', 'users', 'prescription', 'verify'],
+        'SuperAdmin' => [
+            'createdoctor', 'createdistributor', 'createadmin', 'adminedit', 'doctoredit',
+            'distributoredit', 'admin', 'users', 'prescription', 'verify'
+        ],
         'Maineditor' => ['doctoredit', 'distributoredit', 'adminedit', 'users', 'admin', 'prescription'],
         'editor1' => ['doctoredit', 'users', 'admin', 'prescription'],
         'editor2' => ['distributoredit', 'users', 'admin', 'prescription'],
@@ -38,8 +47,8 @@ function checkPermission($permission) {
         'Adminviewer' => ['admin', 'users'],
         'Userviewer' => ['users'],
         'Validator' => ['verify']
-        
-        
+
+
     ];
 
     // Check if the user has the specified permission based on role ID
@@ -52,7 +61,7 @@ if (isset($_POST['login'])) {
     $password = $_POST['password'];
 
     $authController = new AuthController();
-    
+
     if ($authController->login($conn, $username, $password)) {
         // The user will be redirected to dashboard.php upon successful login
     } else {
@@ -60,4 +69,3 @@ if (isset($_POST['login'])) {
         require("login1.php");
     }
 }
-?>

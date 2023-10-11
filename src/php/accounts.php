@@ -1,5 +1,5 @@
 <?php
-require_once("./config.php");
+require_once("../config.php");
 
 session_start();
 
@@ -25,7 +25,7 @@ $username = $_SESSION["username"];
 $rows = 10;
 $page = 1;
 
-if(isset($_GET['page-nr'])){
+if (isset($_GET['page-nr'])) {
     $page = (int)$_GET['page-nr'];
 }
 
@@ -43,9 +43,9 @@ $records  = $conn->query($query1);
 $nr_rows = $records->num_rows;
 $pages = ceil($nr_rows / $rows);
 
-if(isset($_GET['page-nr'])){
+if (isset($_GET['page-nr'])) {
     $page = $_GET['page-nr'] - 1;
-    $start = $page * $rows; 
+    $start = $page * $rows;
 }
 
 // Fetch users and store in the $users array
@@ -71,5 +71,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["verify_account"])) {
     $stmt->close();
 }
 
-include './var/navsidebar.php';
-?>
+include '../var/sidebar.php';

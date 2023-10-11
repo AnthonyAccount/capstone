@@ -1,5 +1,5 @@
 <?php
-require_once("config.php");
+require_once("../config.php");
 
 session_start();
 
@@ -15,7 +15,7 @@ if (isset($_GET["logout"])) {
 
 // Redirect to login page if the user is not logged in
 if (!isset($_SESSION["username"])) {
-    header("Location: index.php");
+    header("Location: ../index.php");
     exit();
 }
 
@@ -32,14 +32,13 @@ $result = $stmt->get_result();
 if ($result->num_rows === 1) {
     // Fetch user data as an associative array
     $userData = $result->fetch_assoc();
-    
+
     // Now, $userData contains all data for the logged-in user
     // You can access specific fields like $userData["field_name"]
 } else {
     // User not found, handle the error or redirect
-    header("Location: index.php");
+    header("Location: ../index.php");
     exit();
 }
 $conn->close();
-include './var/navsidebar.php'
-?>
+include '../var/sidebar.php';

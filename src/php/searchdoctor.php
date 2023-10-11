@@ -1,6 +1,6 @@
 <?php
-require_once("./config.php");
-require_once("./AuthController.php");
+require_once("../config.php");
+require_once("../AuthController.php");
 
 session_start();
 
@@ -16,7 +16,7 @@ if (isset($_GET["logout"])) {
 
 // Redirect to login page if the user is not logged in
 if (!isset($_SESSION["username"])) {
-    header("Location: index.php");
+    header("Location: ../index.php");
     exit();
 }
 
@@ -30,7 +30,7 @@ if (isset($_POST["search"])) {
     // Perform a SQL query to search for doctors with matching names
     $query = "SELECT * FROM doctor WHERE (first_name LIKE ? OR last_name LIKE ?) AND status = 'active'";
 
-    
+
     // Use prepared statements to prevent SQL injection
     $stmt = $conn->prepare($query);
     $searchParam = "%" . $searchQuery . "%";
@@ -52,7 +52,7 @@ if (isset($_POST["search"])) {
 
         // Add the image source to the user data
         $row["image_src"] = $imageSrc;
-    
+
         $users[] = $row;
     }
 
@@ -82,18 +82,9 @@ if (isset($_POST["search"])) {
     $pages = ceil($nr_rows / $rows);
 
     while ($row = $result->fetch_assoc()) {
-        // Convert the image data from binary to base64
-        $imageData = base64_encode($row["prof_image"]);
-        $imageType = 'image/jpeg'; // You may need to determine the image type dynamically
-
-        // Build the data URI for the image
-        $imageSrc = "data:{$imageType};base64,{$imageData}";
-
-        // Add the image source to the user data
-        $row["image_src"] = $imageSrc;
 
         $users[] = $row;
     }
 }
-include './var/navsidebar.php'
+include '../var/sidebar.php';
 ?>

@@ -1,6 +1,6 @@
 <?php
-require_once("config.php");
-require_once("AuthController.php");
+require_once("../config.php");
+require_once("../AuthController.php");
 session_start();
 
 if (isset($_GET["logout"])) {
@@ -32,7 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $name = $_POST["name"];
     $position = $_POST["position"];
     $role = $_POST["role"];
-   
+    $email = $_POST["email"];
+
 
     // Perform SQL query to insert user into User table
     $userInsertQuery = "INSERT INTO user1 (username, password, RoleID) VALUES ('$username', '$hashedPassword', '$role')";
@@ -41,10 +42,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $user_id = $conn->insert_id;
 
         // Perform SQL query to insert doctor into Doctor table
-        $adminInsertQuery = "INSERT INTO dohstaff (user_id, name, position) 
-                              VALUES ('$user_id', '$name', '$position')";
+        $adminInsertQuery = "INSERT INTO dohstaff (user_id, name, position, email) 
+                              VALUES ('$user_id', '$name', '$position', '$email')";
         if ($conn->query($adminInsertQuery) === TRUE) {
-            echo "admin registered successfully.";
+            echo "<script>alert('admin registered successfully.');</script>";
         } else {
             echo "Error: " . $adminInsertQuery . "<br>" . $conn->error;
         }
@@ -56,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 $rows = 5;
 $page = 1; // Default page number if not set
 
-if(isset($_GET['page-nr'])){
+if (isset($_GET['page-nr'])) {
     $page = (int)$_GET['page-nr'];
 }
 
@@ -76,16 +77,13 @@ $records  = $conn->query($query1);
 $nr_rows = $records->num_rows;
 $pages = ceil($nr_rows / $rows);
 
-if(isset($_GET['page-nr'])){
+if (isset($_GET['page-nr'])) {
     $page = $_GET['page-nr'] - 1;
-    $start = $page * $rows; 
+    $start = $page * $rows;
 }
 // Fetch users and store in the $users array
 while ($row = $result->fetch_assoc()) {
     $users[] = $row;
 }
-
-
 $conn->close();
-include './var/navsidebar.php'
-?>
+include '../var/sidebar.php';

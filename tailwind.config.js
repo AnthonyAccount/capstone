@@ -1,14 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
- content: ["./src/**/*.{html,php,js}"],
+  content: ["./src/**/*.{html,php,js}"],
   theme: {
     extend: {},
   },
-  variants:{
-    extends:{
-      display:['group-focus']
+  variants: {
+    extends: {
+      display: ["group-focus"],
     },
   },
   plugins: [],
-}
-
+};

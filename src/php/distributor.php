@@ -1,6 +1,23 @@
 <?php
 require_once("config.php");
 
+session_start();
+if (isset($_GET["logout"])) {
+    if ($_GET["logout"] === "true") {
+        // Clear all session variables
+        $_SESSION = array();
+
+        // Destroy the session
+        session_destroy();
+    }
+}
+
+// Redirect to login page if the user is not logged in
+if (!isset($_SESSION["username"])) {
+    header("Location: index.php");
+    exit();
+}
+
 if (isset($_POST['distributor_register'])) {
     $username = $_POST['username'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);

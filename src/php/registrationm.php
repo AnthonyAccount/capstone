@@ -1,5 +1,5 @@
 <?php
-require_once("./config.php");
+require_once("../config.php");
 
 $registration_status = "";
 
@@ -15,12 +15,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $contactInfo = $_POST["contact_info"];
     $email = $_POST["email"];
     $status = $_POST["status"];
-    $region = $_POST["region"];
+    $address = $_POST["address"];
+    $hospital_id = $_POST['hospital_id'];
     
-    // Handle image upload
     $image = $_FILES["prof_image"];
     $imageData = file_get_contents($image["tmp_name"]); // Read image data
     $imageData = base64_encode($imageData); // Encode image data as base64
+
+    // Start a database transaction
+    $conn->begin_transaction();
 
     // Perform SQL query to insert user into User table using prepared statement
     $userInsertQuery = "INSERT INTO user1 (username, password, RoleID) VALUES (?, ?, 1)";
@@ -32,24 +35,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $user_id = $conn->insert_id;
 
         // Perform SQL query to insert doctor into Doctor table using prepared statement
-        $doctorInsertQuery = "INSERT INTO doctor (user_id, first_name, last_name, specialty, contact_info, email, status, region, prof_image) 
-                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $doctorInsertQuery = "INSERT INTO doctor (user_id, first_name, last_name, specialty, contact_info, email, status, address, hospital_id, prof_image) 
+                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $doctorInsertStmt = $conn->prepare($doctorInsertQuery);
-        $doctorInsertStmt->bind_param("issssssss", $user_id, $firstName, $lastName, $specialty, $contactInfo, $email, $status, $region, $imageData);
+        $doctorInsertStmt->bind_param("isssssssss", $user_id, $firstName, $lastName, $specialty, $contactInfo, $email, $status, $address, $hospital_id, $imageData);
 
         if ($doctorInsertStmt->execute()) {
-            echo "Doctor registered successfully.";
+            // Commit the transaction if both inserts are successful
+            $conn->commit();
+            $registration_status = "Doctor registered successfully.";
         } else {
-            echo "Error: " . $doctorInsertStmt->error;
+            // Rollback the transaction if there's an error
+            $conn->rollback();
+            $registration_status = "Error: " . $doctorInsertStmt->error;
         }
     } else {
-        echo "Error: " . $userInsertStmt->error;
+        // Rollback the transaction if there's an error
+        $conn->rollback();
+        $registration_status = "Error: " . $userInsertStmt->error;
     }
 
     // Close the prepared statements
     $userInsertStmt->close();
     $doctorInsertStmt->close();
-}
 
-$conn->close();
+    // Close the database connection
+    $conn->close();
+}
 ?>
